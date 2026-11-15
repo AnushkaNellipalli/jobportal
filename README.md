@@ -1,98 +1,108 @@
-# Job Application Website
+# JobPortal
 
-A multi-page job application platform with structured navigation, interactive UI components, and form-based interactions for submitting applications.
+A full stack job portal where users sign up, browse jobs, apply with a validated form, and track the status of their applications.
 
-🔗 **Live Demo:** https://jobapplication-nu.vercel.app/
-📂 **Repository:** https://github.com/AnushkaNellipalli/jobapplication
+**Repository:** https://github.com/AnushkaNellipalli/jobportal
 
-<!-- Add a screenshot or GIF of the main page here once available -->
-<!-- ![Job Application Homepage](./screenshots/homepage.png) -->
+**Live Demo:** coming soon
+
+## Screenshots
+
+Add screenshots of the home page, jobs page, apply form, and My Applications page here.
 
 ## Overview
 
-This project simulates a real-world job application platform, built to practice structuring multi-page frontend flows, handling form input, and organizing a user journey from browsing to submitting an application.
+JobPortal is built to practice a real-world full stack workflow: a React frontend that talks to a Django REST API, with token-based login and data saved in a database. A user can go from browsing jobs to applying and tracking each application in one place.
 
 ## Features
 
-- Multi-page structure with clear, organized navigation
-- Form-based interactions including input validation and submission handling
-- Interactive UI components for a smooth application flow
-- Responsive layout tested across different screen sizes
+- Sign up and log in with email, using a custom Django user model
+- JWT authentication
+- Browse jobs and open a job page
+- Apply to a job with a form that validates required fields
+- My Applications page loaded from the backend, with status filters (In Review, Shortlisted, Rejected), a progress timeline, and loading, empty, and logged-out states
+- Profile page
+- Responsive layout for desktop and mobile
 
 ## Tech Stack
 
-- **JavaScript** — application logic and interactivity
-- **HTML5 & CSS3** — markup and styling
-- **Vercel** — deployment and hosting
-
-## Getting Started
-
-Clone the repository and run it locally:
-
-```bash
-git clone https://github.com/AnushkaNellipalli/jobapplication.git
-cd jobapplication
-```
-
-If the project uses a bundler (e.g. npm/Vite), install and run:
-
-```bash
-npm install
-npm start
-```
-
-Otherwise, simply open `index.html` in your browser.
+| Layer | Technology |
+| --- | --- |
+| Frontend | React, Vite, Tailwind CSS, React Router |
+| Backend | Django, Django REST Framework |
+| Authentication | JWT (token blacklist enabled) |
+| Database | SQLite (development) |
 
 ## Project Structure
 
 ```
-jobapplication/
-├── index.html
-├── css/
-├── js/
-└── README.md
+jobapplication-main/
+├── backend/
+│   ├── accounts/        # custom user model, auth
+│   ├── jobs/            # job listings
+│   ├── applications/    # job applications API
+│   ├── config/          # Django settings and urls
+│   └── manage.py
+├── src/
+│   ├── pages/           # Home, Jobs, JobPage, ApplyJob, Applications, Profile, Login, Register
+│   ├── components/
+│   └── utils/
+├── package.json
+└── vite.config.js
 ```
 
-*(Update this structure to match your actual folder layout.)*
+## Run Locally
 
-## What I Learned
+### 1. Backend
 
-- Structuring multi-page frontend navigation without a framework
-- Building form validation and handling submission states
-- Practicing responsive layout techniques across screen sizes
-
-## Author
-
-**Anushka Nellipalli**
-- GitHub: [@AnushkaNellipalli](https://github.com/AnushkaNellipalli)
-- LinkedIn: [anushka-nellipalli](https://linkedin.com/in/anushka-nellipalli-277a213ab)
-- Portfolio: [anushkanellipalli.github.io/portfolio](https://anushkanellipalli.github.io/portfolio/)
-
-
----
-
-## Running with the Django backend
-
-The React app now loads jobs and handles sign-up / login through the Django API in `backend/`.
-Run both at the same time in two terminals:
-
-```bash
-# Terminal 1 - backend (http://127.0.0.1:8000)
+```
 cd backend
-python -m venv venv && source venv/bin/activate     # Windows: venv\Scripts\activate
+python -m venv venv
+venv\Scripts\activate
 pip install -r requirements.txt
 python manage.py migrate
-python manage.py seed_jobs
 python manage.py runserver
+```
 
-# Terminal 2 - frontend (http://localhost:5173)
+The API runs at http://127.0.0.1:8000
+
+### 2. Frontend
+
+Open a new terminal in the project root:
+
+```
 npm install
 npm run dev
 ```
 
-If the API is not on `http://127.0.0.1:8000`, copy `.env.example` to `.env` and set `VITE_API_URL`.
-Before deploying, add your frontend's URL to `CORS_ALLOWED_ORIGINS` (see `backend/.env.example`).
+The app runs at http://localhost:5173
 
-Connected to the API: job list + search, job details, similar/recent jobs, register, login, logout.
-Still local for now: the apply form submit, My Applications, and Profile.
-`src/data/jobs.js` is no longer imported anywhere and can be deleted.
+### 3. Try it
+
+1. Register a new account and log in.
+2. Open Jobs and choose a job.
+3. Submit the apply form.
+4. Open My Applications to see it listed.
+
+## Environment Variables
+
+Copy `.env.example` to `.env` and fill in your values. Never commit your real `.env` file.
+
+## What I Learned
+
+- Designing a custom user model so users log in with email
+- Building REST endpoints with Django REST Framework ViewSets and routers
+- Securing endpoints with JWT and calling them from React
+- Handling loading, error, empty, and logged-out states in the UI
+
+## Future Improvements
+
+- Employer dashboard to post jobs and update application status
+- Resume upload
+- Search and filters on the jobs page
+- Deployment of the frontend and backend
+
+## Author
+
+Anushka Nellipalli
+GitHub: https://github.com/AnushkaNellipalli
